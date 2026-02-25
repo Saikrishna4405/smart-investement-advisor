@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Welcome {{ session.username }}</h2>
+
+<h3>Your Watchlist</h3>
+
+<ul>
+  {% for stock in watchlist %}
+      <li>{{ stock }}</li>
+  {% endfor %}
+</ul>
+
+<form method="POST" action="/add_watchlist">
+    <input type="text" name="stock" placeholder="Enter stock name" required>
+    <button type="submit">Add to Watchlist</button>
+</form>
+
+<br>
+<a href="/">Go to Home</a>
+
+</body>
+</html>

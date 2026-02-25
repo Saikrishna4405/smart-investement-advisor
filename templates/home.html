@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Smart Investment Advisor</h1>
+
+<div class="form-section">
+    <form method="POST" action="/analyze">
+
+        <select name="stock" required>
+            {% for stock in stocks %}
+                <option value="{{ stock }}"
+                    {% if result and stock == result.stock %}selected{% endif %}>
+                    {{ stock }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="range">
+            <option value="1M" {% if selected_range == "1M" %}selected{% endif %}>1 Month</option>
+            <option value="3M" {% if selected_range == "3M" %}selected{% endif %}>3 Months</option>
+            <option value="6M" {% if selected_range == "6M" %}selected{% endif %}>6 Months</option>
+            <option value="1Y" {% if selected_range == "1Y" %}selected{% endif %}>1 Year</option>
+            <option value="ALL" {% if selected_range == "ALL" %}selected{% endif %}>All</option>
+        </select>
+
+        <button type="submit">Analyze</button>
+    </form>
+</div>
+
+{% if result %}
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Volatility</h3>
+        <p>{{ result.volatility }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Average Return</h3>
+        <p>{{ result.avg_return }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Trend</h3>
+        <p>{{ result.trend }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Score</h3>
+        <p>{{ result.score }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Risk Level</h3>
+        <p class="{{ result.risk_level | lower }}">{{ result.risk_level }}</p>
+    </div>
+
+    <div class="card">
+        <h3>RSI</h3>
+        <p>{{ result.rsi }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Next Day Prediction</h3>
+        <p>{{ result.prediction }}</p>
+    </div>
+
+</div>
+
+<!-- ✅ ADD WATCHLIST BUTTON -->
+{% if session.username %}
+<div style="text-align:center; margin-top:25px;">
+    <form method="POST" action="/add_watchlist">
+        <input type="hidden" name="stock" value="{{ result.stock }}">
+        <button class="btn btn-success">Add to Watchlist</button>
+    </form>
+</div>
+{% endif %}
+
+{% if chart_data %}
+<canvas id="stockChart"></canvas>
+<script>
+const chartData = {{ chart_data | tojson | safe }};
+new Chart(document.getElementById('stockChart'), {
+    type: 'line',
+    data: {
+        labels: chartData.dates,
+        datasets: [
+            { label: 'Close', data: chartData.close, borderColor: '#38bdf8', borderWidth: 2, pointRadius: 0 },
+            { label: 'MA20', data: chartData.ma20, borderColor: '#22c55e', borderWidth: 2, pointRadius: 0 },
+            { label: 'MA50', data: chartData.ma50, borderColor: '#f97316', borderWidth: 2, pointRadius: 0 }
+        ]
+    },
+    options: { responsive: true }
+});
+</script>
+{% endif %}
+
+{% endif %}
+
+{% endblock %}

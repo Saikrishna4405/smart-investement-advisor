@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Investment Advisor</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Your Custom Styles -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: white;
+        }
+
+        .container {
+            width: 85%;
+            margin: 40px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .card {
+            flex: 1 1 200px;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .recommendation {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        .buy { color: #22c55e; }
+        .avoid { color: #ef4444; }
+        .hold { color: #facc15; }
+
+        canvas {
+            margin-top: 40px;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .low { color: #22c55e; font-weight: bold; }
+        .moderate { color: #facc15; font-weight: bold; }
+        .high { color: #ef4444; font-weight: bold; }
+
+        .rsi-high { color: #ef4444; }
+        .rsi-low { color: #22c55e; }
+        .rsi-neutral { color: #facc15; }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-dark px-4">
+    <a class="navbar-brand" href="/">Smart Advisor</a>
+
+    <div>
+        {% if session.username %}
+            <a class="btn btn-outline-light me-2" href="/dashboard">Dashboard</a>
+            <a class="btn btn-danger" href="/logout">Logout</a>
+        {% else %}
+            <a class="btn btn-outline-light me-2" href="/login">Login</a>
+            <a class="btn btn-success" href="/signup">Signup</a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

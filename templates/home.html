@@ -32,37 +32,37 @@
 
 <div class="cards">
 
-    <div class="card">
+    <div class="metric-card">
         <h3>Volatility</h3>
         <p>{{ result.volatility }}</p>
     </div>
 
-    <div class="card">
+    <div class="metric-card">
         <h3>Average Return</h3>
         <p>{{ result.avg_return }}</p>
     </div>
 
-    <div class="card">
+    <div class="metric-card">
         <h3>Trend</h3>
         <p>{{ result.trend }}</p>
     </div>
 
-    <div class="card">
+    <div class="metric-card">
         <h3>Score</h3>
         <p>{{ result.score }}</p>
     </div>
 
-    <div class="card">
+    <div class="metric-card">
         <h3>Risk Level</h3>
         <p class="{{ result.risk_level | lower }}">{{ result.risk_level }}</p>
     </div>
 
-    <div class="card">
+    <div class="metric-card">
         <h3>RSI</h3>
         <p>{{ result.rsi }}</p>
     </div>
 
-    <div class="card">
+    <div class="metric-card">
         <h3>Next Day Prediction</h3>
         <p>{{ result.prediction }}</p>
     </div>
@@ -99,5 +99,6 @@ new Chart(document.getElementById('stockChart'), {
 {% endif %}
 
 {% endif %}
+
 
 {% endblock %}

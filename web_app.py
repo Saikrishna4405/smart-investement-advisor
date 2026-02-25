@@ -4,6 +4,7 @@ from analysis import calculate_metrics
 from advisor import investment_decision
 from predictor import predict_next_price
 from datetime import timedelta
+import pandas as pd
 import os
 
 app = Flask(__name__)
@@ -128,4 +129,5 @@ def analyze():
 # ---------------- RUN APP ----------------
 if __name__ == "__main__":
     import pandas as pd
+
     app.run(debug=True)

@@ -226,7 +226,7 @@ def calculate_metrics(df):
     crash_alert = ""
     recent_returns = df["returns"].tail(30)
 
-    if recent_returns.min() < -0.08:
+    if recent_returns.min() < -0.05:
         crash_alert = "Market shows high downside movement!"
 
     return {
@@ -518,4 +518,5 @@ def remove_from_buy():
     return "Removed"
 
 if __name__ == "__main__":
+
     app.run(debug=True)

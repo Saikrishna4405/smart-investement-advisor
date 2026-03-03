@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-center mt-5 mb-5">Your Buy List</h2>
+
+{% if buylist and buylist|length > 0 %}
+
+<!-- STOCK GRID -->
+<div id="stockContainer" class="container">
+    <div class="row justify-content-center">
+
+        {% for stock in buylist %}
+        <div class="col-md-3 text-center mb-4">
+            <button class="btn btn-success btn-lg w-100 py-3"
+                    onclick="openTradeSection('{{ stock }}')">
+                {{ stock.split('.')[0] }}
+            </button>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<!-- TRADE SECTION -->
+<div id="tradeSection" class="text-center mt-5" style="display:none;">
+
+    <h4 id="tradeTitle" class="mb-4"></h4>
+
+    <div class="mb-4">
+        <a id="growwLink" class="btn btn-success px-4 py-2 m-2">Groww</a>
+        <a id="zerodhaLink" class="btn btn-warning px-4 py-2 m-2">Zerodha</a>
+        <a id="upstoxLink" class="btn btn-primary px-4 py-2 m-2">Upstox</a>
+    </div>
+
+    <form method="POST" action="/remove_from_buy" class="mb-3">
+        <input type="hidden" name="stock" id="removeStockInput">
+        <button class="btn btn-danger px-4">
+            Remove from Buy List
+        </button>
+    </form>
+
+    <button class="btn btn-outline-light mt-3"
+            onclick="goBack()">
+        ← Back to Buy List
+    </button>
+
+</div>
+
+{% else %}
+<p class="text-center mt-5">No stocks added yet.</p>
+{% endif %}
+
+<script>
+function openTradeSection(stock) {
+
+    const cleanStock = stock.split('.')[0];
+
+    // Hide stock grid
+    document.getElementById("stockContainer").style.display = "none";
+
+    // Show trade section
+    document.getElementById("tradeSection").style.display = "block";
+
+    document.getElementById("tradeTitle").innerText =
+        "Trade " + cleanStock;
+
+    document.getElementById("growwLink").href =
+        "/go/groww/" + stock;
+
+    document.getElementById("zerodhaLink").href =
+        "/go/zerodha/" + stock;
+
+    document.getElementById("upstoxLink").href =
+        "/go/upstox/" + stock;
+
+    document.getElementById("removeStockInput").value = stock;
+}
+
+function goBack() {
+
+    document.getElementById("tradeSection").style.display = "none";
+    document.getElementById("stockContainer").style.display = "block";
+}
+</script>
+
+{% endblock %}
